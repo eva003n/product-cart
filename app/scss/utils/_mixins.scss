@@ -1,0 +1,22 @@
+@mixin breakPoint-up ($width) {
+    @media (min-width: $width ) {
+        @content;
+        
+    }
+
+}
+@mixin breakPoint-down ($width) {
+    @media (max-width: $width ) {
+        @content;
+        
+    }
+
+}
+
+//icons
+@mixin icons() {
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    padding: 1px;
+}

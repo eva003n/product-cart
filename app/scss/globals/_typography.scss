@@ -1,0 +1,12 @@
+@use "../utils/" as u;
+h1 {
+  margin-bottom: 1rem;
+  color: u.$rose-900;
+  font-size: 2rem;
+  font-weight: map-get(u.$fontWeights, bold );
+}
+h2 {
+  color: u.$red;
+  font-size: 1.2rem;
+  font-weight: map-get(u.$fontWeights, bold );
+}

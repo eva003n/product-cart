@@ -1,0 +1,23 @@
+@use "../utils/" as u;
+.button {
+  outline: 1px solid u.$rose-500;
+  min-height: 30px;
+  // padding: 0.5em 1.4em;
+  border-radius: 15px;
+  font-weight: map-get(u.$fontWeights, normal);
+}
+
+.container {
+  width: min(100% - 40px, 65rem);
+  margin: 0 auto;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  margin-block: 1.5rem;
+}
+.quantitymutiple {
+  color: u.$red;
+
+}  
+
