@@ -75,6 +75,7 @@
   background-color: u.$rose-50;
   padding: 1em;
   width: min(100%, 20rem);
+  border-radius: 10px;
 
 }
 @include u.breakPoint-down(400px) {

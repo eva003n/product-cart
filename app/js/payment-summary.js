@@ -1,5 +1,6 @@
 import { cart, updateCartQuantity, removeFromCart } from "./data/cart.js"
 import {  formatCurrency } from "./utils/money.js";
+import { loadProducts } from "./products.js";
 
 export function renderPaymentSummary() {
     let cartSummaryHtml = '';
@@ -29,13 +30,14 @@ export function renderPaymentSummary() {
               </div>
               
         `
-         renderOrderTotal(totalCostCents)
+         
     });
+    cartSummaryHtml = cartSummaryHtml + renderOrderTotal(totalCostCents);
 
 cartSummaryHtml = cart.length !== 0 ? cartSummaryHtml : renderEmptyCart()
 document.querySelector('.js-cart-products').innerHTML = cartSummaryHtml; 
-// document.querySelector('.js-cart-products').innerHTML = renderOrderTotal(totalCostCents);
-document.querySelector('.js-cart-quantity').innerHTML = `(${updateCartQuantity()})`;
+ const cartQuantiy = updateCartQuantity();
+document.querySelector('.js-cart-quantity').innerHTML = `(${cartQuantiy})`;
 
 
 
@@ -43,6 +45,7 @@ document.querySelectorAll(`.js-remove-cart-item`).forEach((removeButton) => {
     removeButton.addEventListener('click', () => {
         const {productName} = removeButton.dataset;
         removeFromCart(productName);
+        loadProducts();
         renderPaymentSummary();
     
     
@@ -81,7 +84,8 @@ function renderOrderTotal(total) {
           </div>
 
     `
-document.querySelector('.js-order-total ').innerHTML = orderTotalHtml;
+// document.querySelector('.js-order-total ').innerHTML = orderTotalHtml;
+return orderTotalHtml;
 }
 
 function renderEmptyCart() {

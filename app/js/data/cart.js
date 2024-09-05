@@ -1,6 +1,6 @@
 
 export let cart = JSON.parse(localStorage.getItem('cart')) ;
-if(!cart) {
+/*if(!cart) {
     cart = [
         {
             productName: 'Waffle with Berries',
@@ -15,7 +15,7 @@ if(!cart) {
         
     ]
 
-}
+}*/
 /*save to local storage */
 export function saveToStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));

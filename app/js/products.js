@@ -1,19 +1,56 @@
-import { addToCart } from "./data/cart.js";
+import { addToCart, cart } from "./data/cart.js";
 import { formatCurrency, convertToCents } from "./utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
 
-async function getProducts(func) {
-  const requestUrl = "../../data.json";
-  const request = new Request(requestUrl);
+
+ /*async function getProducts(func) {
+  const requestUrl = "http://127.0.0.1:5501/data.json";
+  
+  try {
+    const request = new Request(requestUrl);
+  
 
   const response = await fetch(request);
+  console.log(response.status);
+  if(!response.ok) {
+    throw new Error(`${response.status} (Not Found)`);
+  }
   const products = await response.json();
   func(products);
+
+  } catch(err) {
+    console.warn(err.message);
+
+  }
+  
+}*/
+
+function getProducts(func) {
+  const requestUrl = "http://127.0.0.1:5501/data.json";
+fetch( requestUrl)
+.then((response) => {
+  if(!response.ok) { //error checking
+  throw new Error((`${response.status} (Not Found)`));
+  }
+  return response.json();
+  })
+.then((data) => {
+  func(data);
+  })
+.catch((err) => { //errro handling
+  console.log(err.message);
+  });
 }
-export function loadProducts() {
+
+
+
+
+ export function loadProducts () {
   getProducts(renderProducts);
 }
-// loadProducts();
+
+
+
 
 function renderProducts(products) {
   let productSummary = "";
@@ -49,8 +86,8 @@ function renderProducts(products) {
               }">
 
               
-                <img src="assets/images/icon-decrement-quantity.svg" alt="dexrease cart quantity icon">
-                <span class="quantiiy">1</span>
+                <img src="assets/images/icon-decrement-quantity.svg" alt="dexrease cart quantity icon" class="js-increase-quantity">
+                <span class="quantiiy js-product-quantity"></span>
                 
                 <img src="assets/images/icon-increment-quantity.svg" alt="increase cart quantity icon" />
 
@@ -63,21 +100,26 @@ function renderProducts(products) {
               )}</p>
             </div>
           </div>
-        
-        
         `;
   });
+
   document.querySelector(".js-product-summary").innerHTML = productSummary;
+  
   document.querySelectorAll(".js-add-to-cart").forEach((addToCartButton) => {
     addToCartButton.addEventListener("click", () => {
       const {productName} = addToCartButton.dataset
-      console.log(productName);
+      
       addToCartButton.classList.add('product-added');
       
   
 
-      addToCart(products, productName);
-      renderPaymentSummary();
+      addToCart(products, productName);/*identify which product to add via name */
+   
+    
+       renderPaymentSummary();/*reload the cart and payment summary */
     });
   });
 }
+
+
+
