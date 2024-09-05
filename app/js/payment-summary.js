@@ -101,6 +101,6 @@ function renderEmptyCart() {
         </div>
         `
     
-    //  document.querySelector('.js-empty-cart').innerHTML = emptyCartHtml;
+   
     return emptyCartHtml;
 }

@@ -1,28 +1,25 @@
-
-import { addToCart} from './data/cart.js'
+import { addToCart } from "./data/cart.js";
 import { formatCurrency, convertToCents } from "./utils/money.js";
-import { renderPaymentSummary } from './payment-summary.js';
+import { renderPaymentSummary } from "./payment-summary.js";
 
 async function getProducts(func) {
-    const requestUrl = '../../data.json';
-    const request = new Request(requestUrl);
+  const requestUrl = "../../data.json";
+  const request = new Request(requestUrl);
 
-    const response = await fetch(request);
-      const products = await response.json();
-    func(products);   
+  const response = await fetch(request);
+  const products = await response.json();
+  func(products);
 }
 export function loadProducts() {
-    getProducts(renderProducts);
+  getProducts(renderProducts);
 }
-loadProducts();
+// loadProducts();
 
-
-function renderProducts(products) { 
-    let productSummary = '';
-    products.forEach((product) => {
-        product.price = convertToCents(product.price)
-        productSummary +=
-        `
+function renderProducts(products) {
+  let productSummary = "";
+  products.forEach((product) => {
+    product.price = convertToCents(product.price);
+    productSummary += `
         <div class="products__product" >
             <div class="product__image">
               <picture>
@@ -41,11 +38,15 @@ function renderProducts(products) {
               </picture>
             </div>
             <div class="product__details">
-              <button class="add-to-cart button js-add_to-cart" data-product-name="${product.name}">
+              <button class="add-to-cart button js-add-to-cart added-to-cart-${product.name}" data-product-name="${
+                product.name
+              }">
                 <img src="assets/images/icon-add-to-cart.svg" alt="cart icon" />
                 Add to cart
               </button>
-              <button class="update_quantity  button sr-only js-update-quantity-${product.name}">
+              <button class="update_quantity  button js-update-quantity " data-product-name="${
+                product.name
+              }">
 
               
                 <img src="assets/images/icon-decrement-quantity.svg" alt="dexrease cart quantity icon">
@@ -57,38 +58,26 @@ function renderProducts(products) {
               </button>
               <p class="product-name">${product.name}</p>
               <p class="product-description">${product.category}</p>
-              <p class="product-price">&dollar;${formatCurrency(product.price)}</p>
+              <p class="product-price">&dollar;${formatCurrency(
+                product.price
+              )}</p>
             </div>
           </div>
         
         
-        `
-
-    });
-    document.querySelector('.js-product-summary').innerHTML = productSummary;
-    document.querySelectorAll('.add-to-cart').forEach((addToCartButton) => {
-   
-      addToCartButton.addEventListener('click', () => {
-      const {productName } = addToCartButton.dataset;
-      console.log(productName);
-   
-     console.log(document.querySelector(`.js-update-quantity-${productName}`));
-    addToCart(products, productName);
-    renderPaymentSummary();
-  
-    
-      
-      
-      });
+        `;
   });
+  document.querySelector(".js-product-summary").innerHTML = productSummary;
+  document.querySelectorAll(".js-add-to-cart").forEach((addToCartButton) => {
+    addToCartButton.addEventListener("click", () => {
+      const {productName} = addToCartButton.dataset
+      console.log(productName);
+      addToCartButton.classList.add('product-added');
+      
   
 
-
- 
-       
-        
-
+      addToCart(products, productName);
+      renderPaymentSummary();
+    });
+  });
 }
-
-
-

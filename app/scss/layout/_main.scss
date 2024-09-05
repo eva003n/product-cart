@@ -50,11 +50,18 @@
   outline: 1px solid u.$red;
   opacity: 0.95;
 }
+.add-to-cart {
+  z-index: 2;
+}
+.product-added {
+  visibility: hidden;
+}
 .update_quantity {
   background-color: u.$red;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  z-index: 1;
 }
 .update_quantity > img {
   outline: 1px solid u.$rose-50;
