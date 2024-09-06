@@ -67,6 +67,7 @@ export function updateCartQuantity() {
         cartQuantity += 1;
 
     });
+    
     return cartQuantity;
 }
 export function removeFromCart(productName) {
