@@ -25,7 +25,7 @@ import { renderPaymentSummary } from "./payment-summary.js";
 
 
 function getProducts(func) {
-  const requestUrl = "/data.json";
+  const requestUrl = "data.json";
   const request = new Request(requestUrl);
   fetch(request)
     .then((response) => {

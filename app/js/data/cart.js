@@ -1,8 +1,8 @@
 
 export let cart = JSON.parse(localStorage.getItem('cart')) ;
-/*if(!cart) {
+if(!cart) {
     cart = [
-        {
+       /* {
             productName: 'Waffle with Berries',
             priceCents: 650,
             quantity: 1
@@ -11,11 +11,11 @@ export let cart = JSON.parse(localStorage.getItem('cart')) ;
             productName: 'Vanilla Bean Crème Brûlée',
             priceCents: 700,
             quantity: 2
-        }
+        }*/
         
     ]
 
-}*/
+}
 /*save to local storage */
 export function saveToStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
