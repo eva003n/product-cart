@@ -25,7 +25,7 @@ export function renderPaymentSummary() {
                   <img
                     src="assets/images/icon-remove-item.svg"
                     alt="remove item icon"
-                  />
+                  >
                 </div>
               </div>
               
@@ -75,7 +75,7 @@ function renderOrderTotal(total) {
               <img
                 src="assets/images/icon-carbon-neutral.svg"
                 alt="carbon neutral icon"
-              />
+              >
               This is a carbon neutral delivery
             </p>
           </div>
@@ -98,7 +98,7 @@ function renderEmptyCart() {
               <img
                 src="assets/images/illustration-empty-cart.svg"
                 alt="empty cart icon"
-              />
+              >
             </div>
             <p class="empty-cart-text">Your added items will appear here</p>
           </div>

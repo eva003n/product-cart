@@ -1,4 +1,4 @@
-import { cart, addToCart, updateCartQuantity } from "./data/cart.js";
+import { cart, addToCart} from "./data/cart.js";
 import { formatCurrency, convertToCents } from "./utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
 
@@ -79,7 +79,7 @@ function renderProducts(products) {
               )} " data-product-name="${
       product.name
     }" data-product-category="${product.category.slice(0, 3)}">
-                <img src="assets/images/icon-add-to-cart.svg" alt="cart icon" />
+                <img src="assets/images/icon-add-to-cart.svg" alt="cart icon" >
                 Add to cart
               </button>
               <button class="update_quantity  button js-update-quantity " data-product-name="${
@@ -93,7 +93,7 @@ function renderProducts(products) {
                   3
                 )}"></span>
                 
-                <img src="assets/images/icon-increment-quantity.svg" alt="increase cart quantity icon" />
+                <img src="assets/images/icon-increment-quantity.svg" alt="increase cart quantity icon" >
 
                 
               </button>
