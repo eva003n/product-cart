@@ -1,7 +1,7 @@
 @use "../utils/" as u;
 .button {
   outline: 1px solid u.$rose-500;
-  min-height: 30px;
+  min-height: 36px;
   // padding: 0.5em 1.4em;
   border-radius: 15px;
   font-weight: map-get(u.$fontWeights, normal);
