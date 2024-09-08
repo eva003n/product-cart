@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <title>Frontend Mentor | Product list with cart</title>
 
-  <title>Frontend Mentor | Product list with cart</title>
+    <link rel="stylesheet" href="dist/styles.css" />
+  </head>
 
-  <link rel="stylesheet" href="dist/styles.css">
-</head>
+  <body>
+    <main class="products-container container">
+      <section class="products-summary">
+        <h1>Desserts</h1>
+        <div class="products js-product-summary">
+          <!-- js generated products appear here -->
+        </div>
+      </section>
+      <section class="payment-summary">
+        <h2>Your Cart <span class="cart quantity js-cart-quantity"></span></h2>
+        <div class="cart-products js-cart-products">
+          <!-- js generated cart appears here -->
+        </div>
+        <div class="order-confirmation">
+          <button class="confirm-order js-confirm-button">Confirm Order</button>
+        </div>
+      </section>
+      <div class="overlay js-overlay"></div>
+    </main>
+    <aside class="popup-container mobile desktop js-popup sr-only">
+      <img src="assets/images/icon-order-confirmed.svg" alt="checkmark icon" />
+      <h3 class="ordered-title">Order Confirmed</h3>
+      <p class="overlay-text">We hope ypu enjoy your food!</p>
+      <div class="ordered-products js-order-summary">
+        <!-- JS generates order Checkot html appears here -->
+      </div>
 
-<body>
-  <main class="products-container container">
-    <section class="products-summary">
-      <h1>Desserts</h1>
-      <div class="products js-product-summary"></div>
-    </section>
-    <section class="payment-summary">
-      <h2>Your Cart <span class="cart quantity js-cart-quantity"></span></h2>
-      <div class="cart-products js-cart-products"></div>
+      <div class="order-confirmation js-new-order">
+        <button class="confirm-order">Start New Order</button>
+      </div>
+    </aside>
 
-    </section>
-  </main>
-
-  <footer>
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. Coded by <a href="#">YEvan Ngugi</a>.
-    </div>
-  </footer>
-  <script src="app/js/scripts.js" type="module"></script>
-</body>
-
+    <footer>
+      <div class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a
+        >. Coded by <a href="#">YEvan Ngugi</a>.
+      </div>
+    </footer>
+    <script src="dist/scripts.js" type="module"></script>
+  </body>
 </html>

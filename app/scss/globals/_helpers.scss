@@ -3,7 +3,7 @@
   outline: 1px solid u.$rose-500;
   min-height: 36px;
   // padding: 0.5em 1.4em;
-  border-radius: 15px;
+  border-radius: 18px;
   font-weight: map-get(u.$fontWeights, normal);
 }
 
@@ -20,4 +20,19 @@
   color: u.$red;
 
 }  
+.popup-container {
+  position: fixed;
+
+  
+  padding: 1.5em 1em;
+  background-color: u.$rose-50;
+  z-index: 10;
+}
+.ordered-flex {
+  display: flex;
+  gap: 1rem;
+ 
+}
+
+
 

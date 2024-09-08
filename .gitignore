@@ -21,3 +21,6 @@ README.md
 /design
 /assets
 .vscode
+node_modules
+package-lock.json
+package.json

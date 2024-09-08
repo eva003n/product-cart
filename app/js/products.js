@@ -24,7 +24,7 @@ import { renderPaymentSummary } from "./payment-summary.js";
 }*/
 
 
-function getProducts(func) {
+export function getProducts(func) {
   const requestUrl = "data.json";
   const request = new Request(requestUrl);
   fetch(request)
@@ -40,7 +40,7 @@ function getProducts(func) {
     })
     .catch((err) => {
       //errro handling
-      console.log(err.message);
+      console.warn(err.message);
     });
 }
 
@@ -52,7 +52,7 @@ function renderProducts(products) {
   let productSummary = "";
 
   products.forEach((product) => {
-    product.price = convertToCents(product.price);
+    product.price = convertToCents(product.price);  /*convert money to cents to do math */
 
     productSummary += `
         <div class="products__product" >
@@ -70,28 +70,20 @@ function renderProducts(products) {
                   src="${product.image.mobile}"
                   alt="Waffle with berries"
                 />
+                
               </picture>
             </div>
             <div class="product__details">
-              <button class="add-to-cart button js-add-to-cart added-${product.category.slice(
-                0,
-                3
-              )} " data-product-name="${
-      product.name
-    }" data-product-category="${product.category.slice(0, 3)}">
+              <button class="add-to-cart button js-add-to-cart added-${product.category.slice(0, 3)}"         data-product-name="${product.name}" data-product-category="${product.category.slice(0, 3)}">
                 <img src="assets/images/icon-add-to-cart.svg" alt="cart icon" >
-                Add to cart
+                Add to cart 
               </button>
-              <button class="update_quantity  button js-update-quantity " >
-
-              
-                <img src="assets/images/icon-decrement-quantity.svg" alt="dexrease cart quantity icon" class="js-decrease" data-product-category="${product.category.slice(0, 3)}" data-product-name="${product.name}">
-                <span class="quantiiy js-product-quantity-${product.category.slice(0, 3)}"></span>
+              <div class="update_quantity button js-update-quantity js-update-quantity-${product.category.slice(0, 3)} ">
+              <button class="js-decrease" data-product-category="${product.category.slice(0, 3)}" data-product-name="${product.name}"><svg class="svg"xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2"><path  d="M0 .375h10v1.25H0V.375Z"/></svg></button>
+                <span class="quantiiy js-product-quantity-${(product.category).slice(0, 3)}"></span>
                 
-                <img src="assets/images/icon-increment-quantity.svg" alt="increase cart quantity icon" class="js-increase " data-product-name="${product.name}" data-product-category="${product.category.slice(0, 3)}" >
-
-                
-              </button>
+                <button class="js-increase "data-product-name="${product.name}" data-product-category="${product.category.slice(0, 3)}"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path  d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"/></svg></button>
+              </div>
               <p class="product-name">${product.name}</p>
               <p class="product-description">${product.category}</p>
               <p class="product-price">&dollar;${formatCurrency(
@@ -112,6 +104,7 @@ function renderProducts(products) {
     
 
       document.querySelector(`.added-${productCategory.slice(0, 3)}`).classList.add("product-added");
+      document.querySelector(`.js-update-quantity-${productCategory.slice(0, 3)}`).classList.add("change-quantity");
 
       addToCart(
         products,
@@ -120,7 +113,7 @@ function renderProducts(products) {
       document.querySelector(
         `.js-product-quantity-${productCategory.slice(0, 3)}`
       ).innerHTML = getProductQuantity(productName);
-
+      document.querySelector('.js-confirm-button').classList.remove('sr-only');
       renderPaymentSummary(); /*reload the cart and payment summary */
     });
   });
@@ -128,22 +121,35 @@ function renderProducts(products) {
 plusButton.addEventListener('click', () => {
 const {productName, productCategory} = plusButton.dataset;
 increaseProductQuantity(productName);
+document.querySelector(`.js-product-quantity-${productCategory.slice(0, 3)}`).innerHTML = getProductQuantity(productName);
+renderPaymentSummary();
+});
+  });
+  document.querySelectorAll('.js-decrease').forEach((Button) => {
+Button.addEventListener('click', () => {
+  const {productName, productCategory} = Button.dataset;
+
+  decreaseProductQuantity(productName);
 document.querySelector(
   `.js-product-quantity-${productCategory.slice(0, 3)}`
 ).innerHTML = getProductQuantity(productName);
 renderPaymentSummary();
+
 });
   });
+
   document.querySelectorAll('.js-decrease').forEach((minusButton) => {
-minusButton.addEventListener('click', () => {
-const {productName, productCategory} = minusButton.dataset;
-decreaseProductQuantity(productName);
-document.querySelector(
-  `.js-product-quantity-${productCategory.slice(0, 3)}`
-).innerHTML = getProductQuantity(productName);
-renderPaymentSummary();
-});
-  });
+    minusButton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+     console.log('event.key')
+     
+    }
+
+    });
+      });
+
+
+
 
 }
 
@@ -156,5 +162,6 @@ export function getProductQuantity(productName) {
     }
   });
   productQuantity = matchingCartItem.quantity;
-  return productQuantity;
+  return productQuantity
 }
+

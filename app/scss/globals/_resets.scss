@@ -14,9 +14,16 @@ body {
     min-height: 100vh;
     background-color: u.$rose-100;
 }
-img,picture {
+img {
     max-width: 100%;
     height: auto;
     vertical-align: middle;
+}
+
+button {
+    &:hover,
+    &:focus {
+        cursor: pointer;
+    }
 }
 
