@@ -70,7 +70,7 @@ function renderProducts(products) {
                   src="${product.image.mobile}"
                   alt="Waffle with berries"
                 />
-                
+              
               </picture>
             </div>
             <div class="product__details">
