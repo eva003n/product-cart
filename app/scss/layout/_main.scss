@@ -13,6 +13,10 @@
 .product__image {
   border-radius: 4px;
   overflow: hidden;
+  &.highlighter {
+    outline: 2px solid u.$red;
+  
+  }
 }
 .product-name,
 .empty-cart-text {
@@ -39,7 +43,7 @@
   width: min(70%, 9rem);
   border: none;
   background-color: u.$rose-50;
-  transition: all 0.5s ease-in-out;
+  transition: .1s ease-in-out;
 }
 .add-to-cart:hover,
 .add-to-cart:focus
@@ -47,7 +51,7 @@
   cursor: pointer;
   outline: 1.5px solid u.$red;
   color: u.$red;
-  // background-color: blueviolet;
+
 }
 .add-to-cart {
   z-index: 2;
@@ -72,7 +76,7 @@
 @include u.icons();
 background-color: u.$red;
 outline: 1px solid u.$rose-50;
-transition: all .3s ease-in-out;
+transition: .1s ease-in-out;
 svg {
   fill: u.$rose-50;
 }
@@ -151,7 +155,7 @@ svg {
   color: u.$rose-50;
   border-radius: 20px;
   border: none;
-  transition: 0.3s background-color ease-in-out;
+  transition: 0.1s background-color ease-in-out;
 }
 .confirm-order {
   &:hover,

@@ -26,11 +26,14 @@ export function addToCart(products, productName) {
              {
               productName,
               priceCents: matchingProduct.price,         /*adding a new product */
-              quantity: 1
+              quantity: 1,
+              productId:matchingProduct.id
+
       
              }
            ); 
      }     
+     
 saveToStorage();                                           /*save to local storage */
 }
 

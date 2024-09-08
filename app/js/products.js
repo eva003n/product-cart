@@ -1,4 +1,9 @@
-import { cart, addToCart, increaseProductQuantity, decreaseProductQuantity} from "./data/cart.js";
+import {
+  cart,
+  addToCart,
+  increaseProductQuantity,
+  decreaseProductQuantity,
+} from "./data/cart.js";
 import { formatCurrency, convertToCents } from "./utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
 
@@ -22,7 +27,6 @@ import { renderPaymentSummary } from "./payment-summary.js";
   }
   
 }*/
-
 
 export function getProducts(func) {
   const requestUrl = "data.json";
@@ -50,13 +54,15 @@ export function loadProducts() {
 
 function renderProducts(products) {
   let productSummary = "";
-
+  let productId = 0;
   products.forEach((product) => {
-    product.price = convertToCents(product.price);  /*convert money to cents to do math */
+    product.price = convertToCents(product.price);
+    productId += 1; /*convert money to cents to do math */
+    product.id = productId;
 
     productSummary += `
         <div class="products__product" >
-            <div class="product__image">
+            <div class="product__image js-added-highlighter-${product.id}">
               <picture>
                 <source
                   media="(min-width: 960px)"
@@ -74,15 +80,37 @@ function renderProducts(products) {
               </picture>
             </div>
             <div class="product__details">
-              <button class="add-to-cart button js-add-to-cart added-${product.category.slice(0, 3)}"         data-product-name="${product.name}" data-product-category="${product.category.slice(0, 3)}">
+              <button class="add-to-cart button js-add-to-cart added-${
+                product.id
+              }"         data-product-name="${
+      product.name
+    }" data-product-category="${product.category.slice(
+      0,
+      3
+    )}" data-product-id="${product.id}">
                 <img src="assets/images/icon-add-to-cart.svg" alt="cart icon" >
                 Add to cart 
               </button>
-              <div class="update_quantity button js-update-quantity js-update-quantity-${product.category.slice(0, 3)} ">
-              <button class="js-decrease" data-product-category="${product.category.slice(0, 3)}" data-product-name="${product.name}"><svg class="svg"xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2"><path  d="M0 .375h10v1.25H0V.375Z"/></svg></button>
-                <span class="quantiiy js-product-quantity-${(product.category).slice(0, 3)}"></span>
+              <div class="update_quantity button  js-update-quantity-${
+                product.id
+              } ">
+              <button class="js-decrease" data-product-category="${product.category.slice(
+                0,
+                3
+              )}" data-product-name="${
+      product.name
+    }"><svg class="svg"xmlns="http://www.w3.org/2000/svg" width="10" height="2" fill="none" viewBox="0 0 10 2"><path  d="M0 .375h10v1.25H0V.375Z"/></svg></button>
+                <span class="quantiiy js-product-quantity-${product.category.slice(
+                  0,
+                  3
+                )}"></span>
                 
-                <button class="js-increase "data-product-name="${product.name}" data-product-category="${product.category.slice(0, 3)}"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path  d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"/></svg></button>
+                <button class="js-increase "data-product-name="${
+                  product.name
+                }" data-product-category="${product.category.slice(
+      0,
+      3
+    )}"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"><path  d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"/></svg></button>
               </div>
               <p class="product-name">${product.name}</p>
               <p class="product-description">${product.category}</p>
@@ -93,18 +121,21 @@ function renderProducts(products) {
           </div>
         `;
   });
+  
 
   document.querySelector(".js-product-summary").innerHTML = productSummary;
 
   document.querySelectorAll(".js-add-to-cart").forEach((addToCartButton) => {
     addToCartButton.addEventListener("click", () => {
-      const { productName, productCategory } = addToCartButton.dataset;
-      
+      const { productName, productCategory, productId } =
+        addToCartButton.dataset;
 
-    
-
-      document.querySelector(`.added-${productCategory.slice(0, 3)}`).classList.add("product-added");
-      document.querySelector(`.js-update-quantity-${productCategory.slice(0, 3)}`).classList.add("change-quantity");
+      document
+        .querySelector(`.added-${productId}`)
+        .classList.add("product-added");
+      document
+        .querySelector(`.js-update-quantity-${productId}`)
+        .classList.add("change-quantity");
 
       addToCart(
         products,
@@ -113,44 +144,34 @@ function renderProducts(products) {
       document.querySelector(
         `.js-product-quantity-${productCategory.slice(0, 3)}`
       ).innerHTML = getProductQuantity(productName);
-      document.querySelector('.js-confirm-button').classList.remove('sr-only');
+      document
+        .querySelector(`.js-added-highlighter-${productId}`)
+        .classList.add("highlighter");
+      document.querySelector(".js-confirm-button").classList.remove("sr-only");
       renderPaymentSummary(); /*reload the cart and payment summary */
     });
   });
-  document.querySelectorAll('.js-increase ').forEach((plusButton) => {
-plusButton.addEventListener('click', () => {
-const {productName, productCategory} = plusButton.dataset;
-increaseProductQuantity(productName);
-document.querySelector(`.js-product-quantity-${productCategory.slice(0, 3)}`).innerHTML = getProductQuantity(productName);
-renderPaymentSummary();
-});
-  });
-  document.querySelectorAll('.js-decrease').forEach((Button) => {
-Button.addEventListener('click', () => {
-  const {productName, productCategory} = Button.dataset;
-
-  decreaseProductQuantity(productName);
-document.querySelector(
-  `.js-product-quantity-${productCategory.slice(0, 3)}`
-).innerHTML = getProductQuantity(productName);
-renderPaymentSummary();
-
-});
-  });
-
-  document.querySelectorAll('.js-decrease').forEach((minusButton) => {
-    minusButton.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-     console.log('event.key')
-     
-    }
-
+  document.querySelectorAll(".js-increase ").forEach((plusButton) => {
+    plusButton.addEventListener("click", () => {
+      const { productName, productCategory } = plusButton.dataset;
+      increaseProductQuantity(productName);
+      document.querySelector(
+        `.js-product-quantity-${productCategory.slice(0, 3)}`
+      ).innerHTML = getProductQuantity(productName);
+      renderPaymentSummary();
     });
-      });
+  });
+  document.querySelectorAll(".js-decrease").forEach((Button) => {
+    Button.addEventListener("click", () => {
+      const { productName, productCategory } = Button.dataset;
 
-
-
-
+      decreaseProductQuantity(productName);
+      document.querySelector(
+        `.js-product-quantity-${productCategory.slice(0, 3)}`
+      ).innerHTML = getProductQuantity(productName);
+      renderPaymentSummary();
+    });
+  });
 }
 
 export function getProductQuantity(productName) {
@@ -162,6 +183,5 @@ export function getProductQuantity(productName) {
     }
   });
   productQuantity = matchingCartItem.quantity;
-  return productQuantity
+  return productQuantity;
 }
-

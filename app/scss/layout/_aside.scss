@@ -11,11 +11,7 @@
   visibility: hidden;
   opacity: 0;
   height: 80svh;
-  overflow-y: auto;
-  scrollbar-width: none;
-  scroll-behavior: smooth;
-
-  //  height: 80svh;
+  overflow-y: auto;  
 }
 
 @include u.breakPoint-down(map-get(u.$breakPoints, medium)) {
@@ -26,21 +22,15 @@
       right: 0;
 
       border-radius: 10px 10px 0 0;
-      // visibility: hidden;
-      // opacity: 0;
-      // animation: slide_in  .5s ease-in-out forwards;
+ 
     }
   }
 }
 @include u.breakPoint-up(map-get(u.$breakPoints, medium)) {
-  .desktop {
+  .popup-container.desktop {
     left: 50%;
     transform: translate(-50%, -50%);
-    // background-color: blueviolet;
-
     border-radius: 10px;
-    // visibility: hidden;
-
     min-width: 22rem;
     top: 50%;
     padding-inline: 1.5em;
@@ -63,7 +53,7 @@
   // opacity: 0;
 }
 .appear {
-  animation: fade_in 0.5s ease-in-out forwards;
+  animation: fade_in 0.3s ease-in-out forwards;
 }
 @keyframes fade_in {
   0% {
@@ -76,7 +66,7 @@
   }
 }
 .overlay-appear {
-  animation: overlay 0.5s ease-in-out forwards;
+  animation: overlay 0.3s ease-in-out forwards;
 }
 @keyframes overlay {
   0% {
@@ -89,10 +79,10 @@
   }
 }
 .disappear {
-  animation: fade_out 0.5s ease-in-out;
+  animation: fade_out 0.3s ease-in-out;
 }
 .overlay-disappear {
-  animation: overlay_out 0.5s ease-in-out forwards;
+  animation: overlay_out 0.3s ease-in-out forwards;
 }
 @keyframes fade_out {
   0% {
