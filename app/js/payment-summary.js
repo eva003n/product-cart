@@ -1,14 +1,14 @@
-import { cart, updateCartQuantity, removeFromCart } from "./data/cart.js";
+//imports
+import { productCart } from "./data/cartObject.js";
 import { formatCurrency } from "./utils/money.js";
-import { getProducts } from "./products.js";
-
+// import { getProducts } from "./products.js";
 import { checkout } from "./order.js";
 
 export function renderPaymentSummary() {
   let cartSummaryHtml = "";
   let totalCostCents = 0;
 
-  cart.forEach((cartItem) => {
+  productCart.cart.forEach((cartItem) => {
     const totalPerProduct = cartItem.priceCents * cartItem.quantity;
     totalCostCents += totalPerProduct;
     cartSummaryHtml += `
@@ -37,15 +37,15 @@ export function renderPaymentSummary() {
 
   cartSummaryHtml = cartSummaryHtml + renderOrderTotal(totalCostCents);
 
-  cartSummaryHtml = cart.length !== 0 ? cartSummaryHtml : renderEmptyCart();
+  cartSummaryHtml = productCart.cart.length !== 0 ? cartSummaryHtml : renderEmptyCart();
   document.querySelector(".js-cart-products").innerHTML = cartSummaryHtml;
-  const cartQuantiy = updateCartQuantity();
+  const cartQuantiy = productCart.updateCartQuantity();
   document.querySelector(".js-cart-quantity").innerHTML = `(${cartQuantiy})`;
 
   document.querySelectorAll(`.js-remove-cart-item`).forEach((removeButton) => {
     removeButton.addEventListener("click", () => {
       const { productName, productId } = removeButton.dataset;
-      removeFromCart(productName);
+      productCart.removeFromCart(productName);
       renderPaymentSummary();
       document
         .querySelector(`.js-added-highlighter-${productId}`)

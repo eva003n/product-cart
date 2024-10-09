@@ -2,20 +2,23 @@
 .products-container {
   display: grid;
   margin-block: 2rem;
+
 }
 .products {
   display: grid;
+  grid-template-columns: minmax(230px, 1fr);
+  grid-template-rows: repeat(9, minmax(300px, 310px));
+  // grid-auto-rows: minmax(300, 310) ;
 }
 .products__product {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1rem;  
 }
 .product__image {
   border-radius: 4px;
   overflow: hidden;
   &.highlighter {
     outline: 2px solid u.$red;
-  
   }
 }
 .product-name,
@@ -39,19 +42,17 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  bottom: 80px;
+  bottom: 60px;
   width: min(70%, 9rem);
   border: none;
   background-color: u.$rose-50;
-  transition: .1s ease-in-out;
+  transition: 0.1s ease-in-out;
 }
 .add-to-cart:hover,
-.add-to-cart:focus
- {
+.add-to-cart:focus {
   cursor: pointer;
   outline: 1.5px solid u.$red;
   color: u.$red;
-
 }
 .add-to-cart {
   z-index: 2;
@@ -64,28 +65,27 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-   z-index: 1;
+  z-index: 1;
   visibility: hidden;
-
 }
 .change-quantity {
   visibility: visible;
 }
 
-.update_quantity > button  {
-@include u.icons();
-background-color: u.$red;
-outline: 1px solid u.$rose-50;
-transition: .1s ease-in-out;
-svg {
-  fill: u.$rose-50;
-}
+.update_quantity > button {
+  @include u.icons();
+  background-color: u.$red;
+  outline: 1px solid u.$rose-50;
+  transition: 0.1s ease-in-out;
+  svg {
+    fill: u.$rose-50;
+  }
 
   &:focus,
   &:hover {
-      background-color: u.$rose-50;
-      
-     svg {
+    background-color: u.$rose-50;
+
+    svg {
       fill: red;
     }
   }
@@ -100,6 +100,7 @@ svg {
   background-color: u.$rose-50;
   padding: 1em;
   width: min(100%, 20rem);
+  min-height: 20rem;
   border-radius: 10px;
 }
 @include u.breakPoint-down(400px) {
@@ -171,8 +172,16 @@ svg {
 
   .products {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 1rem;  
+    grid-template-rows: repeat(3, minmax(300px, 310px));
+    
   }
+  .add-to-cart,
+.update_quantity {
+  bottom: 55px;
+}
+ 
+}
 
   @include u.breakPoint-up(map-get(u.$breakPoints, large)) {
     .products-container {
@@ -188,10 +197,18 @@ svg {
     }
     .add-to-cart,
     .update_quantity {
+      bottom: 85px;
+    }
+  }
+
+  @include u.breakPoint-up(map-get(u.$breakPoints, ex-large)) {
+
+    .add-to-cart,
+    .update_quantity {
       bottom: 80px;
     }
   }
-}
+
 .sr-only {
   position: absolute;
   width: 1px;

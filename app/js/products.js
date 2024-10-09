@@ -1,9 +1,5 @@
-import {
-  cart,
-  addToCart,
-  increaseProductQuantity,
-  decreaseProductQuantity,
-} from "./data/cart.js";
+
+import { productCart } from "./data/cartObject.js";
 import { formatCurrency, convertToCents } from "./utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
 
@@ -27,14 +23,14 @@ import { renderPaymentSummary } from "./payment-summary.js";
   }
   
 }*/
-
+//fetch product data
 export function getProducts(func) {
   const requestUrl = "data.json";
   const request = new Request(requestUrl);
   fetch(request)
     .then((response) => {
       if (!response.ok) {
-        //error checking
+        //error checking by creating an error object
         throw new Error(`${response.status} (Not Found)`);
       }
       return response.json();
@@ -123,8 +119,8 @@ function renderProducts(products) {
   });
   
 
-  document.querySelector(".js-product-summary").innerHTML = productSummary;
-
+   document.querySelector(".js-product-summary").innerHTML = productSummary;
+//adding to cart
   document.querySelectorAll(".js-add-to-cart").forEach((addToCartButton) => {
     addToCartButton.addEventListener("click", () => {
       const { productName, productCategory, productId } =
@@ -137,7 +133,7 @@ function renderProducts(products) {
         .querySelector(`.js-update-quantity-${productId}`)
         .classList.add("change-quantity");
 
-      addToCart(
+      productCart.addToCart(
         products,
         productName
       ); /*identify which product to add via name */
@@ -154,7 +150,7 @@ function renderProducts(products) {
   document.querySelectorAll(".js-increase ").forEach((plusButton) => {
     plusButton.addEventListener("click", () => {
       const { productName, productCategory } = plusButton.dataset;
-      increaseProductQuantity(productName);
+      productCart.increaseProductQuantity(productName);
       document.querySelector(
         `.js-product-quantity-${productCategory.slice(0, 3)}`
       ).innerHTML = getProductQuantity(productName);
@@ -165,7 +161,7 @@ function renderProducts(products) {
     Button.addEventListener("click", () => {
       const { productName, productCategory } = Button.dataset;
 
-      decreaseProductQuantity(productName);
+      productCart.decreaseProductQuantity(productName);
       document.querySelector(
         `.js-product-quantity-${productCategory.slice(0, 3)}`
       ).innerHTML = getProductQuantity(productName);
@@ -177,7 +173,7 @@ function renderProducts(products) {
 export function getProductQuantity(productName) {
   let productQuantity;
   let matchingCartItem;
-  cart.forEach((cartItem) => {
+  productCart.cart.forEach((cartItem) => {
     if (cartItem.productName === productName) {
       matchingCartItem = cartItem;
     }

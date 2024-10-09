@@ -1,4 +1,5 @@
-import { cart, saveToStorage } from "./data/cart.js";
+//imports
+import { productCart } from "./data/cartObject.js";
 import { getProducts, loadProducts } from "./products.js";
 import { formatCurrency } from "./utils/money.js";
 import { renderPaymentSummary } from "./payment-summary.js";
@@ -15,9 +16,9 @@ function renderOrderSummary(products) {
   let orderTotal = 0;
   let productName;
 
-  if(cart.length !== 0 ) { 
+  if(productCart.cart.length !== 0 ) { 
 
-  cart.forEach((cartItem) => {
+  productCart.cart.forEach((cartItem) => {
     productName = cartItem.productName;
     products.forEach((product) => {
       if (product.name === productName) {
@@ -78,8 +79,8 @@ function renderOrderSummary(products) {
 }
 
 function startNewOrder() {
-    cart.splice(0, cart.length);
-    saveToStorage();
+    productCart.cart.splice(0, productCart.cart.length);
+    productCart.saveToStorage();
 
    
   }

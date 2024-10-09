@@ -15,7 +15,7 @@ const browsersync = require("browser-sync").create();
 
 // JavaScript Task
 function jsTask() {
-  return src("app/js/**/*.js", { sourcemaps: true })
+  return src("app/js/scripts.js", { sourcemaps: true })
     .pipe(terser())
     .pipe(dest("dist", { sourcemaps: "." }));
 }
